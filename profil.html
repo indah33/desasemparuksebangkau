@@ -63,6 +63,10 @@
 <main>
 
 
+<!-- =========================================
+     HERO PROFIL
+========================================= -->
+
 <section class="page-hero">
 
     <div>
@@ -86,13 +90,23 @@
 </section>
 
 
-<section class="section profile-grid">
+<!-- =========================================
+     CERITA DESA
+     DATA DARI GOOGLE SHEETS
+========================================= -->
+
+<section
+    class="section profile-grid"
+    data-kategori="Profil"
+    data-judul="Tentang Desa">
 
     <div class="reveal">
 
-        <img class="rounded-img"
-             src="jalanpersawahan.jpg"
-             alt="Jalan dan rumah di kawasan desa">
+        <img
+            class="rounded-img"
+            data-field="gambar"
+            src="jalanpersawahan.jpg"
+            alt="Jalan dan rumah di kawasan desa">
 
     </div>
 
@@ -108,11 +122,14 @@
             dengan alam.
         </h2>
 
-        <p>
+        <!-- Isi dari Google Sheets -->
+        <p data-field="isi">
+
             Suasana Semparuk Sebangkau tercermin dari
             jalur desa yang sederhana, halaman rumah
             yang hijau, pepohonan tropis, dan hamparan
             lahan pertanian di sekitarnya.
+
         </p>
 
         <p>
@@ -126,6 +143,10 @@
 
 </section>
 
+
+<!-- =========================================
+     STATISTIK
+========================================= -->
 
 <section class="stats section">
 
@@ -164,6 +185,10 @@
 </section>
 
 
+<!-- =========================================
+     NILAI YANG DIANGKAT
+========================================= -->
+
 <section class="section values">
 
     <div class="section-heading">
@@ -182,7 +207,11 @@
     <div class="value-grid">
 
 
-        <article>
+        <!-- PERTANIAN -->
+
+        <article
+            data-kategori="Keindahan"
+            data-judul="Pertanian">
 
             <span>🌾</span>
 
@@ -190,15 +219,21 @@
                 Pertanian
             </h3>
 
-            <p>
+            <p data-field="isi">
+
                 Hamparan sawah menjadi bagian penting
                 dari lanskap dan keseharian desa.
+
             </p>
 
         </article>
 
 
-        <article>
+        <!-- ALAM -->
+
+        <article
+            data-kategori="Keindahan"
+            data-judul="Alam">
 
             <span>🌴</span>
 
@@ -206,15 +241,21 @@
                 Alam
             </h3>
 
-            <p>
+            <p data-field="isi">
+
                 Vegetasi tropis dan pepohonan menghadirkan
                 nuansa teduh di sekitar permukiman.
+
             </p>
 
         </article>
 
 
-        <article>
+        <!-- KEHIDUPAN -->
+
+        <article
+            data-kategori="Keindahan"
+            data-judul="Kehidupan">
 
             <span>🏡</span>
 
@@ -222,9 +263,11 @@
                 Kehidupan
             </h3>
 
-            <p>
+            <p data-field="isi">
+
                 Jalan kecil dan rumah warga menciptakan
                 suasana kampung yang akrab.
+
             </p>
 
         </article>
@@ -238,22 +281,38 @@
 </main>
 
 
+<!-- =========================================
+     FOOTER
+========================================= -->
+
 <footer>
 
     <div>
-        <strong>Semparuk Sebangkau</strong>
-        <span>Website keindahan desa</span>
+
+        <strong>
+            Semparuk Sebangkau
+        </strong>
+
+        <span>
+            Website keindahan desa
+        </span>
+
     </div>
 
     <p>
-        © <span id="year"></span>
+
+        ©️ <span id="year"></span>
         Semparuk Sebangkau
+
     </p>
 
 </footer>
 
 
+<!-- JAVASCRIPT -->
+
 <script src="script.js"></script>
 
 </body>
+
 </html>

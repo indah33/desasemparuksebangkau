@@ -173,7 +173,7 @@ a {
     color: white;
 
     background:
-        url('assets/senja-1.jpeg')
+        url('assets/senja-sebangkau.jpg')
         center / cover no-repeat;
 }
 
@@ -484,7 +484,7 @@ h3 {
             rgba(16,35,24,.78),
             rgba(16,35,24,.18)
         ),
-        url('assets/desa-1.jpeg')
+        url('pemukimandesa.jpg')
         center / cover;
 
     color: white;
@@ -517,7 +517,7 @@ h3 {
             rgba(16,35,24,.78),
             rgba(16,35,24,.15)
         ),
-        url('assets/sawah-1.jpeg');
+        url('sawah-1.jpeg');
 }
 
 
@@ -528,7 +528,7 @@ h3 {
             rgba(16,35,24,.72),
             rgba(16,35,24,.15)
         ),
-        url('assets/senja-1.jpeg');
+        url('senja-sebangkau.jpg');
 }
 
 
@@ -539,7 +539,7 @@ h3 {
             rgba(16,35,24,.78),
             rgba(16,35,24,.18)
         ),
-        url('assets/desa-2.jpeg');
+        url('pemukimandesa.jpg');
 }
 
 
