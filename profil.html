@@ -2,7 +2,6 @@
 <html lang="id">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta name="viewport"
@@ -11,7 +10,6 @@
     <title>Semparuk Sebangkau - Profil</title>
 
     <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
@@ -19,14 +17,12 @@
 <header class="site-header solid">
 
     <a class="brand" href="index.html">
-
         <span>🌿</span>
 
         <span>
             Semparuk<br>
             <small>Sebangkau</small>
         </span>
-
     </a>
 
     <button class="menu-toggle">
@@ -62,14 +58,12 @@
 
 <main>
 
-
-<!-- =========================================
-     HERO PROFIL
-========================================= -->
-
 <section class="page-hero">
 
-    <div>
+    <div
+        data-kategori="profil"
+        data-judul="tentang desa"
+    >
 
         <p class="eyebrow">
             TENTANG DESA
@@ -80,7 +74,7 @@
             <em>Sebangkau</em>
         </h1>
 
-        <p>
+        <p class="database-isi">
             Sebuah halaman untuk mengenal karakter,
             suasana, dan kehidupan pedesaan.
         </p>
@@ -90,28 +84,24 @@
 </section>
 
 
-<!-- =========================================
-     CERITA DESA
-     DATA DARI GOOGLE SHEETS
-========================================= -->
-
-<section
-    class="section profile-grid"
-    data-kategori="Profil"
-    data-judul="Tentang Desa">
+<section class="section profile-grid">
 
     <div class="reveal">
 
         <img
             class="rounded-img"
-            data-field="gambar"
             src="jalanpersawahan.jpg"
-            alt="Jalan dan rumah di kawasan desa">
+            alt="Jalan dan rumah di kawasan desa"
+        >
 
     </div>
 
 
-    <div class="reveal">
+    <div
+        class="reveal"
+        data-kategori="profil"
+        data-judul="tentang desa"
+    >
 
         <p class="eyebrow dark">
             CERITA DESA
@@ -122,14 +112,11 @@
             dengan alam.
         </h2>
 
-        <!-- Isi dari Google Sheets -->
-        <p data-field="isi">
-
+        <p class="database-isi">
             Suasana Semparuk Sebangkau tercermin dari
             jalur desa yang sederhana, halaman rumah
             yang hijau, pepohonan tropis, dan hamparan
             lahan pertanian di sekitarnya.
-
         </p>
 
         <p>
@@ -144,50 +131,36 @@
 </section>
 
 
-<!-- =========================================
-     STATISTIK
-========================================= -->
-
 <section class="stats section">
 
     <div class="stat reveal">
-
         <strong>01</strong>
 
         <span>
             Ruang untuk cerita
         </span>
-
     </div>
 
 
     <div class="stat reveal">
-
         <strong>04</strong>
 
         <span>
             Foto pilihan
         </span>
-
     </div>
 
 
     <div class="stat reveal">
-
         <strong>05</strong>
 
         <span>
             Halaman website
         </span>
-
     </div>
 
 </section>
 
-
-<!-- =========================================
-     NILAI YANG DIANGKAT
-========================================= -->
 
 <section class="section values">
 
@@ -206,12 +179,7 @@
 
     <div class="value-grid">
 
-
-        <!-- PERTANIAN -->
-
-        <article
-            data-kategori="Keindahan"
-            data-judul="Pertanian">
+        <article>
 
             <span>🌾</span>
 
@@ -219,21 +187,15 @@
                 Pertanian
             </h3>
 
-            <p data-field="isi">
-
+            <p>
                 Hamparan sawah menjadi bagian penting
                 dari lanskap dan keseharian desa.
-
             </p>
 
         </article>
 
 
-        <!-- ALAM -->
-
-        <article
-            data-kategori="Keindahan"
-            data-judul="Alam">
+        <article>
 
             <span>🌴</span>
 
@@ -241,21 +203,15 @@
                 Alam
             </h3>
 
-            <p data-field="isi">
-
+            <p>
                 Vegetasi tropis dan pepohonan menghadirkan
                 nuansa teduh di sekitar permukiman.
-
             </p>
 
         </article>
 
 
-        <!-- KEHIDUPAN -->
-
-        <article
-            data-kategori="Keindahan"
-            data-judul="Kehidupan">
+        <article>
 
             <span>🏡</span>
 
@@ -263,32 +219,23 @@
                 Kehidupan
             </h3>
 
-            <p data-field="isi">
-
+            <p>
                 Jalan kecil dan rumah warga menciptakan
                 suasana kampung yang akrab.
-
             </p>
 
         </article>
-
 
     </div>
 
 </section>
 
-
 </main>
 
-
-<!-- =========================================
-     FOOTER
-========================================= -->
 
 <footer>
 
     <div>
-
         <strong>
             Semparuk Sebangkau
         </strong>
@@ -296,23 +243,18 @@
         <span>
             Website keindahan desa
         </span>
-
     </div>
 
-    <p>
 
+    <p>
         ©️ <span id="year"></span>
         Semparuk Sebangkau
-
     </p>
 
 </footer>
 
 
-<!-- JAVASCRIPT -->
-
 <script src="script.js"></script>
 
 </body>
-
 </html>
