@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Saran & Masukan | Semparuk Sebangkau</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f8f5;
+            color: #26382d;
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            background: #285943;
+            color: white;
+            padding: 22px 30px;
+
+            box-shadow:
+                0 4px 18px rgba(0, 0, 0, 0.12);
+        }
+
+        .header-content {
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        header h1 {
+            text-align: center;
+            font-size: 27px;
+            margin-bottom: 20px;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav ul {
+            list-style: none;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+        }
+
+        nav ul li a {
+            display: block;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            padding: 10px 15px;
+
+            border-radius: 10px;
+
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        nav ul li a.active {
+            background: #e7cf72;
+
+            color: #285943;
+        }
+
+
+        /* =========================
+           HERO SARAN
+        ========================= */
+
+        .saran-page {
+            padding: 85px 20px 100px;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(102, 151, 116, 0.14),
+                    transparent 280px
+                ),
+                #f4f8f5;
+        }
+
+        .saran-wrapper {
+            max-width: 1050px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns: 0.9fr 1.1fr;
+
+            gap: 65px;
+
+            align-items: center;
+        }
+
+
+        /* =========================
+           BAGIAN INFORMASI
+        ========================= */
+
+        .saran-info {
+            padding: 10px;
+        }
+
+        .saran-label {
+            color: #668875;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            letter-spacing: 3px;
+
+            margin-bottom: 15px;
+        }
+
+        .saran-info h2 {
+            color: #285943;
+
+            font-size: 45px;
+
+            line-height: 1.15;
+
+            margin-bottom: 23px;
+        }
+
+        .saran-info h2 span {
+            color: #789b82;
+        }
+
+        .saran-info > p {
+            color: #68766e;
+
+            font-size: 17px;
+
+            line-height: 1.8;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* =========================
+           INFO BOX
+        ========================= */
+
+        .saran-note {
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 15px;
+
+            padding: 20px;
+
+            background: white;
+
+            border-radius: 13px;
+
+            border: 1px solid #e1e9e3;
+
+            box-shadow:
+                0 8px 25px rgba(30, 70, 45, 0.06);
+        }
+
+        .saran-note-icon {
+            font-size: 25px;
+
+            flex-shrink: 0;
+        }
+
+        .saran-note-text {
+            color: #637168;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================
+           FORM CARD
+        ========================= */
+
+        .saran-card {
+            background: white;
+
+            padding: 42px;
+
+            border-radius: 20px;
+
+            border: 1px solid #e0e9e3;
+
+            box-shadow:
+                0 15px 45px rgba(30, 70, 45, 0.10);
+        }
+
+        .saran-card h3 {
+            color: #285943;
+
+            font-size: 25px;
+
+            margin-bottom: 7px;
+        }
+
+        .saran-card-description {
+            color: #7b857e;
+
+            font-size: 14px;
+
+            margin-bottom: 28px;
+        }
+
+
+        /* =========================
+           FORM GROUP
+        ========================= */
+
+        .saran-form-group {
+            margin-bottom: 20px;
+        }
+
+        .saran-form-group label {
+            display: block;
+
+            color: #3e5b48;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+
+        /* =========================
+           INPUT
+        ========================= */
+
+        .saran-form-group input,
+        .saran-form-group select,
+        .saran-form-group textarea {
+
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border: 1px solid #d7e1da;
+
+            border-radius: 10px;
+
+            background: #fbfdfb;
+
+            color: #33463a;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition: 0.25s;
+        }
+
+        .saran-form-group input,
+        .saran-form-group select {
+            height: 50px;
+        }
+
+        .saran-form-group textarea {
+            min-height: 145px;
+
+            resize: vertical;
+        }
+
+
+        /* =========================
+           INPUT FOCUS
+        ========================= */
+
+        .saran-form-group input:focus,
+        .saran-form-group select:focus,
+        .saran-form-group textarea:focus {
+
+            border-color: #6d9278;
+
+            background: white;
+
+            box-shadow:
+                0 0 0 3px rgba(109, 146, 120, 0.10);
+        }
+
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        .saran-submit {
+
+            width: 100%;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #285943;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+        }
+
+        .saran-submit:hover {
+            background: #1e4935;
+
+            transform: translateY(-1px);
+        }
+
+        .saran-submit:disabled {
+            opacity: 0.7;
+
+            cursor: wait;
+
+            transform: none;
+        }
+
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status-saran {
+
+            min-height: 22px;
+
+            margin-top: 15px;
+
+            text-align: center;
+
+            color: #4e785b;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+
+            background: #285943;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 40px 20px;
+        }
+
+        footer p {
+            margin: 7px 0;
+
+            color: #e5eee8;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            header {
+                padding: 20px 15px;
+            }
+
+            header h1 {
+                font-size: 24px;
+
+                margin-bottom: 18px;
+            }
+
+            nav ul {
+                display: grid;
+
+                grid-template-columns: repeat(2, 1fr);
+
+                gap: 7px;
+            }
+
+            nav ul li a {
+                text-align: center;
+
+                font-size: 12px;
+
+                padding: 10px 5px;
+            }
+
+
+            .saran-page {
+                padding: 65px 16px 80px;
+            }
+
+            .saran-wrapper {
+
+                grid-template-columns: 1fr;
+
+                gap: 40px;
+            }
+
+            .saran-info {
+                padding: 0;
+            }
+
+            .saran-info h2 {
+                font-size: 37px;
+            }
+
+            .saran-info > p {
+                font-size: 16px;
+            }
+
+            .saran-card {
+                padding: 30px 23px;
+            }
+
+        }
+
+
+        /* =========================
+           HP KECIL
+        ========================= */
+
+        @media (max-width: 430px) {
+
+            .saran-info h2 {
+                font-size: 31px;
+            }
+
+            .saran-card {
+                padding: 26px 18px;
+            }
+
+            .saran-card h3 {
+                font-size: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header>
+
+        <div class="header-content">
+
+            <h1>
+                🌿 Semparuk Sebangkau
+            </h1>
+
+
+            <nav>
+
+                <ul>
+
+                    <li>
+                        <a href="index.html">
+                            Beranda
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="profil.html">
+                            Profil
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="wisata.html">
+                            Keindahan
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="galeri.html">
+                            Galeri
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="kontak.html">
+                            Kontak
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="saran.html" class="active">
+                            💬 Saran & Masukan
+                        </a>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         SARAN & MASUKAN
+    ========================= -->
+
+    <main>
+
+        <section class="saran-page">
+
+            <div class="saran-wrapper">
+
+
+                <!-- INFORMASI -->
+
+                <div class="saran-info">
+
+                    <div class="saran-label">
+                        SUARA MASYARAKAT
+                    </div>
+
+
+                    <h2>
+                        Ceritakan
+                        <span>pendapatmu.</span>
+                    </h2>
+
+
+                    <p>
+                        Kami terbuka terhadap saran, masukan,
+                        dan ide dari masyarakat untuk membantu
+                        mengembangkan informasi serta pelayanan
+                        Desa Semparuk Sebangkau.
+                    </p>
+
+
+                    <div class="saran-note">
+
+                        <div class="saran-note-icon">
+                            🌱
+                        </div>
+
+                        <div class="saran-note-text">
+
+                            Masukan dari masyarakat dapat
+                            membantu memberikan ide dan
+                            informasi yang bermanfaat bagi
+                            perkembangan desa.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- FORM -->
+
+                <div class="saran-card">
+
+                    <h3>
+                        Sampaikan Masukan
+                    </h3>
+
+
+                    <p class="saran-card-description">
+                        Silakan isi formulir berikut dengan lengkap.
+                    </p>
+
+
+                    <form id="saranForm">
+
+
+                        <!-- NAMA -->
+
+                        <div class="saran-form-group">
+
+                            <label for="namaSaran">
+                                Nama
+                            </label>
+
+                            <input
+                                type="text"
+                                id="namaSaran"
+                                name="nama"
+                                placeholder="Masukkan nama kamu"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- KATEGORI -->
+
+                        <div class="saran-form-group">
+
+                            <label for="kategoriSaran">
+                                Kategori
+                            </label>
+
+                            <select
+                                id="kategoriSaran"
+                                name="kategori"
+                                required
+                            >
+
+                                <option value="">
+                                    Pilih kategori
+                                </option>
+
+                                <option value="Saran">
+                                    Saran
+                                </option>
+
+                                <option value="Masukan">
+                                    Masukan
+                                </option>
+
+                                <option value="Ide">
+                                    Ide
+                                </option>
+
+                                <option value="Lainnya">
+                                    Lainnya
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- PESAN -->
+
+                        <div class="saran-form-group">
+
+                            <label for="pesanSaran">
+                                Pesan
+                            </label>
+
+                            <textarea
+                                id="pesanSaran"
+                                name="pesan"
+                                placeholder="Tuliskan saran atau masukan kamu..."
+                                required
+                            ></textarea>
+
+                        </div>
+
+
+
+                        <!-- BUTTON -->
+
+                        <button
+                            type="submit"
+                            class="saran-submit"
+                            id="submitSaran"
+                        >
+                            Kirim Masukan
+                        </button>
+
+
+                        <p
+                            id="statusSaran"
+                            class="status-saran"
+                        ></p>
+
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        <p>
+            Semparuk Sebangkau Website Keindahan Desa
+        </p>
+
+        <p>
+            © 2026 Semparuk Sebangkau
+        </p>
+
+    </footer>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        const API_URL =
+            "https://script.google.com/macros/s/AKfycbwXZM3JocmsycsqVfgfZTn4c5Vfy2ePwZfrHxYDKtBegrm-4Iz2yVYUsHZfCcazKDCg/exec";
+
+
+        const form =
+            document.getElementById("saranForm");
+
+        const status =
+            document.getElementById("statusSaran");
+
+        const button =
+            document.getElementById("submitSaran");
+
+
+        form.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const nama =
+                    document
+                    .getElementById("namaSaran")
+                    .value
+                    .trim();
+
+
+                const kategori =
+                    document
+                    .getElementById("kategoriSaran")
+                    .value;
+
+
+                const pesan =
+                    document
+                    .getElementById("pesanSaran")
+                    .value
+                    .trim();
+
+
+                if (
+                    !nama ||
+                    !kategori ||
+                    !pesan
+                ) {
+
+                    status.textContent =
+                        "Mohon lengkapi semua data.";
+
+                    return;
+
+                }
+
+
+                button.disabled = true;
+
+                button.textContent =
+                    "Mengirim...";
+
+                status.textContent = "";
+
+
+                try {
+
+                    const data =
+                        new URLSearchParams();
+
+
+                    data.append(
+                        "action",
+                        "saran"
+                    );
+
+
+                    data.append(
+                        "nama",
+                        nama
+                    );
+
+
+                    data.append(
+                        "kategori",
+                        kategori
+                    );
+
+
+                    data.append(
+                        "pesan",
+                        pesan
+                    );
+
+
+                    const response =
+                        await fetch(
+                            API_URL,
+                            {
+                                method: "POST",
+                                body: data
+                            }
+                        );
+
+
+                    const result =
+                        await response.json();
+
+
+                    if (
+                        result.status ===
+                        "success"
+                    ) {
+
+                        status.textContent =
+                            "✓ Saran berhasil dikirim. Terima kasih!";
+
+                        form.reset();
+
+                    } else {
+
+                        status.textContent =
+                            result.message ||
+                            "Gagal mengirim masukan.";
+
+                    }
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Error:",
+                        error
+                    );
+
+
+                    status.textContent =
+                        "Saran gagal dikirim. Silakan coba lagi.";
+
+                }
+
+
+                button.disabled = false;
+
+                button.textContent =
+                    "Kirim Masukan";
+
+            }
+
+        );
+
+    </script>
+
+
+</body>
+
+</html>
