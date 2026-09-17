@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cek Pengaduan | Semparuk Sebangkau</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.check-page{min-height:72vh;padding:80px 20px;background:var(--paper)}
+.check-wrap{max-width:760px;margin:auto}
+.check-card{background:var(--cream);padding:40px;border:1px solid var(--line)}
+.check-card h1{font-size:46px;margin-bottom:10px}
+.check-card p{color:var(--muted)}
+.check-form{display:flex;gap:12px;margin-top:25px}
+.check-form input{margin:0}
+.check-form button{white-space:nowrap;border:0;cursor:pointer}
+.result{display:none;margin-top:28px;padding:25px;background:var(--paper);border:1px solid var(--line)}
+.result.show{display:block}
+.result-row{padding:9px 0;border-bottom:1px solid var(--line)}
+.result-row:last-child{border-bottom:0}
+.status{display:inline-block;padding:5px 12px;font-weight:700;font-size:12px}
+.status.menunggu{background:#f3e8b9}.status.ditanggapi{background:#d8eadc;color:#285943}.status.ditolak{background:#f0d1d1;color:#7a3030}
+.check-msg{margin-top:15px;font-weight:700;color:var(--green)}
+@media(max-width:600px){.check-form{flex-direction:column}.check-card{padding:28px}.check-card h1{font-size:37px}}
+</style>
+</head>
+<body>
+<header class="site-header solid">
+<a class="brand" href="index.html"><span>🌿</span><span>Semparuk<small>Sebangkau</small></span></a>
+<nav class="nav">
+<a href="index.html">Beranda</a><a href="profil.html">Profil</a><a href="wisata.html">Keindahan</a><a href="galeri.html">Galeri</a><a href="kontak.html">Kontak</a><a href="saran.html">Pengaduan</a>
+</nav>
+<button class="menu-toggle" aria-label="Menu">☰</button>
+</header>
+<main class="check-page">
+<section class="check-wrap">
+<div class="check-card">
+<p class="eyebrow dark">PELACAKAN</p>
+<h1>Cek Pengaduan</h1>
+<p>Masukkan ID pengaduan yang kamu dapat setelah mengirim laporan.</p>
+<form class="check-form" id="checkForm">
+<input id="aduanId" placeholder="Contoh: PG-20260917-001" required>
+<button class="btn btn-dark" type="submit" id="checkButton">Cek Status</button>
+</form>
+<p class="check-msg" id="checkMsg"></p>
+<div class="result" id="result"></div>
+</div>
+</section>
+</main>
+<footer><div><strong>Semparuk Sebangkau</strong><span>Website keindahan desa</span></div><p>© <span id="year"></span> Semparuk Sebangkau</p></footer>
+<script src="api-config.js"></script>
+<script src="script.js"></script>
+<script>
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+document.getElementById("checkForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const id = document.getElementById("aduanId").value.trim();
+  const msg = document.getElementById("checkMsg"), box = document.getElementById("result"), btn = document.getElementById("checkButton");
+  if(!API_URL || API_URL.includes("GANTI_DENGAN")){msg.textContent="URL Google Apps Script belum diatur.";return;}
+  btn.disabled=true; btn.textContent="Mengecek..."; msg.textContent=""; box.classList.remove("show");
+  try{
+    const d=new URLSearchParams(); d.append("action","cek"); d.append("id",id);
+    const r=await fetch(API_URL,{method:"POST",body:d}); const x=await r.json();
+    if(x.status==="success" && x.data){
+      const a=x.data;
+      const st=(a.status||"Menunggu").toLowerCase();
+      box.innerHTML=`<div class="result-row"><b>ID</b><br>${esc(a.id)}</div>
+      <div class="result-row"><b>Kategori</b><br>${esc(a.kategori)}</div>
+      <div class="result-row"><b>Tanggal</b><br>${esc(a.tanggal)}</div>
+      <div class="result-row"><b>Status</b><br><span class="status ${st}">${esc(a.status)}</span></div>
+      <div class="result-row"><b>Tanggapan Admin</b><br>${esc(a.tanggapan || "Belum ada tanggapan.")}</div>`;
+      box.classList.add("show");
+    } else msg.textContent=x.message||"ID pengaduan tidak ditemukan.";
+  }catch(err){msg.textContent="Tidak dapat terhubung ke database."}
+  btn.disabled=false; btn.textContent="Cek Status";
+});
+</script>
+</body>
+</html>

@@ -747,6 +747,16 @@
 
 
 
+<div style="max-width:1050px;margin:0 auto;padding:0 20px 80px;">
+  <div class="saran-card" style="margin-top:25px;">
+    <h3>Cek Status Pengaduan</h3>
+    <p class="saran-card-description">Sudah pernah mengirim pengaduan? Masukkan ID pengaduan untuk melihat tanggapan admin.</p>
+    <a href="cek-pengaduan.html" class="saran-submit" style="display:block;text-align:center;text-decoration:none;">Cek Status Pengaduan →</a>
+    <p style="margin-top:15px;color:#68766e;font-size:13px;">Untuk pengelola desa: <a href="login-admin.html" style="color:#285943;font-weight:bold;">Login Admin</a></p>
+  </div>
+</div>
+
+
     <!-- =========================
          FOOTER
     ========================= -->
@@ -769,157 +779,58 @@
          JAVASCRIPT
     ========================= -->
 
+    <script src="api-config.js"></script>
     <script>
+        const form = document.getElementById("saranForm");
+        const status = document.getElementById("statusSaran");
+        const button = document.getElementById("submitSaran");
 
-        const API_URL =
-            "https://script.google.com/macros/s/AKfycbwXZM3JocmsycsqVfgfZTn4c5Vfy2ePwZfrHxYDKtBegrm-4Iz2yVYUsHZfCcazKDCg/exec";
+        form.addEventListener("submit", async function(event) {
+            event.preventDefault();
 
+            const nama = document.getElementById("namaSaran").value.trim();
+            const kategori = document.getElementById("kategoriSaran").value;
+            const pesan = document.getElementById("pesanSaran").value.trim();
 
-        const form =
-            document.getElementById("saranForm");
-
-        const status =
-            document.getElementById("statusSaran");
-
-        const button =
-            document.getElementById("submitSaran");
-
-
-        form.addEventListener(
-            "submit",
-            async function(event) {
-
-                event.preventDefault();
-
-
-                const nama =
-                    document
-                    .getElementById("namaSaran")
-                    .value
-                    .trim();
-
-
-                const kategori =
-                    document
-                    .getElementById("kategoriSaran")
-                    .value;
-
-
-                const pesan =
-                    document
-                    .getElementById("pesanSaran")
-                    .value
-                    .trim();
-
-
-                if (
-                    !nama ||
-                    !kategori ||
-                    !pesan
-                ) {
-
-                    status.textContent =
-                        "Mohon lengkapi semua data.";
-
-                    return;
-
-                }
-
-
-                button.disabled = true;
-
-                button.textContent =
-                    "Mengirim...";
-
-                status.textContent = "";
-
-
-                try {
-
-                    const data =
-                        new URLSearchParams();
-
-
-                    data.append(
-                        "action",
-                        "saran"
-                    );
-
-
-                    data.append(
-                        "nama",
-                        nama
-                    );
-
-
-                    data.append(
-                        "kategori",
-                        kategori
-                    );
-
-
-                    data.append(
-                        "pesan",
-                        pesan
-                    );
-
-
-                    const response =
-                        await fetch(
-                            API_URL,
-                            {
-                                method: "POST",
-                                body: data
-                            }
-                        );
-
-
-                    const result =
-                        await response.json();
-
-
-                    if (
-                        result.status ===
-                        "success"
-                    ) {
-
-                        status.textContent =
-                            "✓ Saran berhasil dikirim. Terima kasih!";
-
-                        form.reset();
-
-                    } else {
-
-                        status.textContent =
-                            result.message ||
-                            "Gagal mengirim masukan.";
-
-                    }
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Error:",
-                        error
-                    );
-
-
-                    status.textContent =
-                        "Saran gagal dikirim. Silakan coba lagi.";
-
-                }
-
-
-                button.disabled = false;
-
-                button.textContent =
-                    "Kirim Masukan";
-
+            if (!nama || !kategori || !pesan) {
+                status.textContent = "Mohon lengkapi semua data.";
+                return;
             }
 
-        );
+            if (!API_URL || API_URL.includes("GANTI_DENGAN")) {
+                status.textContent = "Database belum dikonfigurasi.";
+                return;
+            }
 
+            button.disabled = true;
+            button.textContent = "Mengirim...";
+            status.textContent = "";
+
+            try {
+                const data = new URLSearchParams();
+                data.append("action", "pengaduan");
+                data.append("nama", nama);
+                data.append("kategori", kategori);
+                data.append("pengaduan", pesan);
+
+                const response = await fetch(API_URL, { method: "POST", body: data });
+                const result = await response.json();
+
+                if (result.status === "success") {
+                    status.innerHTML = "✓ Pengaduan berhasil dikirim. ID Pengaduan: <strong>" +
+                        result.id + "</strong>. Simpan ID tersebut untuk mengecek tanggapan admin.";
+                    form.reset();
+                } else {
+                    status.textContent = result.message || "Gagal mengirim pengaduan.";
+                }
+            } catch (error) {
+                console.error(error);
+                status.textContent = "Pengaduan gagal dikirim. Periksa koneksi database.";
+            }
+
+            button.disabled = false;
+            button.textContent = "Kirim Masukan";
+        });
     </script>
 
 
