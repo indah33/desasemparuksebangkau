@@ -1,84 +1,114 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login Admin | Semparuk Sebangkau</title>
-<link rel="stylesheet" href="style.css">
-<style>
-.admin-auth{min-height:72vh;display:flex;align-items:center;justify-content:center;padding:70px 20px;background:var(--paper)}
-.admin-card{width:min(430px,100%);background:var(--cream);padding:42px;border:1px solid var(--line);box-shadow:0 18px 45px rgba(24,37,30,.08)}
-.admin-card h1{font-size:42px;margin-bottom:10px}
-.admin-card p{color:var(--muted)}
-.admin-card label{display:block;margin:20px 0 0;font-size:13px;font-weight:700}
-.admin-card input{margin-top:7px}
-.admin-card .btn{width:100%;margin-top:22px;border:0;cursor:pointer}
-.admin-message{min-height:24px;margin:14px 0 0;color:#a33;font-size:13px}
-.admin-back{display:inline-block;margin-top:18px;color:var(--green);font-weight:700;font-size:13px}
-</style>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Login Admin - Semparuk Sebangkau</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
 <header class="site-header solid">
-<a class="brand" href="index.html"><span>🌿</span><span>Semparuk<small>Sebangkau</small></span></a>
-<nav class="nav">
-<a href="index.html">Beranda</a>
-<a href="profil.html">Profil</a>
-<a href="wisata.html">Keindahan</a>
-<a href="galeri.html">Galeri</a>
-<a href="kontak.html">Kontak</a>
-<a href="saran.html">Pengaduan</a>
-</nav>
-<button class="menu-toggle" aria-label="Menu">☰</button>
+
+    <a class="brand" href="index.html">
+        <span>🌿</span>
+        <div>
+            Semparuk
+            <small>Sebangkau</small>
+        </div>
+    </a>
+
+    <button class="menu-toggle">☰</button>
+
+    <nav class="nav">
+        <a href="index.html">Beranda</a>
+        <a href="profil.html">Profil</a>
+        <a href="wisata.html">Keindahan</a>
+        <a href="galeri.html">Galeri</a>
+        <a href="kontak.html">Kontak</a>
+        <a href="saran.html">Pengaduan</a>
+        <a href="login-admin.html">Login Admin</a>
+    </nav>
+
 </header>
 
-<main class="admin-auth">
-<section class="admin-card">
-<p class="eyebrow dark">AREA PENGELOLA</p>
-<h1>Login Admin</h1>
-<p>Masuk untuk melihat dan mengelola pengaduan masyarakat.</p>
-<form id="loginForm">
-<label>Username<input id="username" type="text" autocomplete="username" required></label>
-<label>Password<input id="password" type="password" autocomplete="current-password" required></label>
-<button class="btn btn-dark" type="submit" id="loginButton">Masuk ke Dashboard →</button>
-<p class="admin-message" id="loginMessage" aria-live="polite"></p>
-</form>
-<a class="admin-back" href="saran.html">← Kembali ke Pengaduan</a>
-</section>
+
+<main style="max-width:500px;margin:130px auto 60px;padding:20px;">
+
+    <div style="
+        background:white;
+        padding:30px;
+        border-radius:16px;
+        box-shadow:0 10px 30px rgba(0,0,0,.08);
+    ">
+
+        <h1>Login Admin</h1>
+
+        <p>
+            Silakan masuk untuk mengelola pengaduan masyarakat.
+        </p>
+
+        <form id="loginForm">
+
+            <label>Username</label>
+
+            <input
+                type="text"
+                id="username"
+                required
+                style="
+                    width:100%;
+                    padding:12px;
+                    margin:8px 0 18px;
+                    box-sizing:border-box;
+                "
+            >
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                id="password"
+                required
+                style="
+                    width:100%;
+                    padding:12px;
+                    margin:8px 0 20px;
+                    box-sizing:border-box;
+                "
+            >
+
+            <button
+                type="submit"
+                style="
+                    width:100%;
+                    padding:13px;
+                    border:0;
+                    border-radius:8px;
+                    cursor:pointer;
+                "
+            >
+                Login
+            </button>
+
+        </form>
+
+        <p id="loginMessage"></p>
+
+    </div>
+
 </main>
 
-<footer><div><strong>Semparuk Sebangkau</strong><span>Website keindahan desa</span></div><p>© <span id="year"></span> Semparuk Sebangkau</p></footer>
-<script src="api-config.js"></script>
+
 <script src="script.js"></script>
-<script>
-document.getElementById("loginForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const msg = document.getElementById("loginMessage");
-  const btn = document.getElementById("loginButton");
-  if (!API_URL || API_URL.includes("GANTI_DENGAN")) {
-    msg.textContent = "URL Google Apps Script belum diatur.";
-    return;
-  }
-  btn.disabled = true; btn.textContent = "Memeriksa...";
-  msg.textContent = "";
-  try {
-    const data = new URLSearchParams();
-    data.append("action","login");
-    data.append("username",document.getElementById("username").value.trim());
-    data.append("password",document.getElementById("password").value);
-    const r = await fetch(API_URL,{method:"POST",body:data});
-    const result = await r.json();
-    if(result.status === "success"){
-      sessionStorage.setItem("adminToken", result.token);
-      sessionStorage.setItem("adminUser", document.getElementById("username").value.trim());
-      location.href = "admin.html";
-    } else {
-      msg.textContent = result.message || "Username atau password salah.";
-    }
-  } catch(err) {
-    msg.textContent = "Login gagal. Periksa URL Apps Script dan deployment.";
-  }
-  btn.disabled = false; btn.textContent = "Masuk ke Dashboard →";
-});
-</script>
+<script src="api-config.js"></script>
+<script src="admin.js"></script>
+
 </body>
 </html>
