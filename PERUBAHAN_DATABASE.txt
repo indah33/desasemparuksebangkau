@@ -1,0 +1,14 @@
+FILE BARU:
+- Code.gs
+- api-config.js
+- login-admin.html
+- admin.html
+- admin.js
+- cek-pengaduan.html
+- PANDUAN_DATABASE.md
+
+DIPERBARUI:
+- saran.html: form lama tetap dipertahankan, tetapi sekarang mengirim pengaduan ke Google Sheets dan menampilkan ID pengaduan.
+
+FILE WEBSITE LAMA LAINNYA:
+Dipertahankan tanpa perubahan isi.
