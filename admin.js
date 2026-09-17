@@ -1,60 +1,323 @@
-const token = sessionStorage.getItem("adminToken");
-const rows = document.getElementById("rows");
-const msg = document.getElementById("adminMsg");
+document.addEventListener("DOMContentLoaded", function () {
 
-if (!token) location.href = "login-admin.html";
+    const loginForm = document.getElementById("loginForm");
 
-const escAdmin = s => String(s ?? "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    if (loginForm) {
 
-async function api(action, extra={}) {
-  const d = new URLSearchParams();
-  d.append("action", action); d.append("token", token);
-  Object.entries(extra).forEach(([k,v]) => d.append(k,v));
-  const r = await fetch(API_URL,{method:"POST",body:d});
-  return r.json();
-}
+        loginForm.addEventListener("submit", loginAdmin);
 
-async function loadData(){
-  msg.textContent="Memuat data...";
-  try{
-    const x=await api("list");
-    if(x.status!=="success"){
-      if(x.message==="Sesi tidak valid."){sessionStorage.clear();location.href="login-admin.html";return;}
-      msg.textContent=x.message||"Gagal memuat data."; return;
     }
-    const data=x.data||[];
-    document.getElementById("total").textContent=data.length;
-    document.getElementById("waiting").textContent=data.filter(a=>a.status==="Menunggu").length;
-    document.getElementById("done").textContent=data.filter(a=>a.status==="Ditanggapi").length;
-    rows.innerHTML="";
-    if(!data.length){rows.innerHTML='<tr><td colspan="7" class="empty">Belum ada pengaduan.</td></tr>';msg.textContent="";return;}
-    data.forEach(a=>{
-      const tr=document.createElement("tr");
-      tr.innerHTML=`<td><b>${escAdmin(a.id)}</b></td><td>${escAdmin(a.tanggal)}</td><td>${escAdmin(a.nama)}<br><small>${escAdmin(a.kontak||"")}</small></td><td>${escAdmin(a.kategori)}</td><td>${escAdmin(a.pengaduan)}</td>
-      <td><span class="status-admin ${escAdmin(a.status)}">${escAdmin(a.status)}</span></td>
-      <td class="action-box">${a.tanggapan?`<div><small>Tanggapan:</small><br>${escAdmin(a.tanggapan)}</div>`:""}
-      <textarea id="reply-${escAdmin(a.id)}" placeholder="Tulis tanggapan admin..."></textarea>
-      <button class="btn-response" onclick="updateStatus('${encodeURIComponent(a.id)}','Ditanggapi')">Tanggapi</button>
-      <button class="btn-reject" onclick="updateStatus('${encodeURIComponent(a.id)}','Ditolak')">Tolak</button></td>`;
-      rows.appendChild(tr);
-    });
-    msg.textContent="";
-  }catch(e){msg.textContent="Gagal terhubung ke Google Apps Script."}
+
+    if (document.getElementById("complaintTable")) {
+
+        loadComplaints();
+
+    }
+
+});
+
+
+async function loginAdmin(e) {
+
+    e.preventDefault();
+
+    const username =
+        document.getElementById("username").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const message =
+        document.getElementById("loginMessage");
+
+    message.innerHTML = "Memeriksa login...";
+
+    try {
+
+        const response = await fetch(API_URL, {
+
+            method: "POST",
+
+            body: new URLSearchParams({
+
+                action: "login",
+
+                username: username,
+
+                password: password
+
+            })
+
+        });
+
+        const data = await response.json();
+
+        if (!data.success) {
+
+            message.innerHTML =
+                "Username atau password salah.";
+
+            return;
+
+        }
+
+        localStorage.setItem(
+            "adminToken",
+            data.token
+        );
+
+        window.location.href = "admin.html";
+
+    } catch (error) {
+
+        console.error(error);
+
+        message.innerHTML =
+            "Gagal menghubungi server.";
+
+    }
+
 }
 
-async function updateStatus(encodedId,status){
-  const id=decodeURIComponent(encodedId);
-  const ta=document.getElementById("reply-"+id);
-  const tanggapan=ta ? ta.value.trim() : "";
-  if(status==="Ditanggapi" && !tanggapan){alert("Isi tanggapan admin terlebih dahulu.");return;}
-  msg.textContent="Menyimpan...";
-  try{
-    const x=await api("update",{id,status,tanggapan});
-    msg.textContent=x.status==="success"?"Perubahan berhasil disimpan.":(x.message||"Gagal menyimpan.");
-    if(x.status==="success") loadData();
-  }catch(e){msg.textContent="Gagal menyimpan perubahan."}
+
+async function loadComplaints() {
+
+    const token =
+        localStorage.getItem("adminToken");
+
+    if (!token) {
+
+        window.location.href =
+            "login-admin.html";
+
+        return;
+
+    }
+
+    const table =
+        document.getElementById("complaintTable");
+
+    table.innerHTML = `
+        <tr>
+            <td colspan="9">
+                Memuat data...
+            </td>
+        </tr>
+    `;
+
+    try {
+
+        const response = await fetch(API_URL, {
+
+            method: "POST",
+
+            body: new URLSearchParams({
+
+                action: "list",
+
+                token: token
+
+            })
+
+        });
+
+        const data = await response.json();
+
+        if (!data.success) {
+
+            localStorage.removeItem("adminToken");
+
+            window.location.href =
+                "login-admin.html";
+
+            return;
+
+        }
+
+        if (!data.data || data.data.length === 0) {
+
+            table.innerHTML = `
+                <tr>
+                    <td colspan="9">
+                        Belum ada pengaduan.
+                    </td>
+                </tr>
+            `;
+
+            return;
+
+        }
+
+        table.innerHTML = "";
+
+        data.data.forEach(item => {
+
+            const row =
+                document.createElement("tr");
+
+            row.innerHTML = `
+
+                <td>${item.id}</td>
+
+                <td>${item.timestamp}</td>
+
+                <td>${item.nama}</td>
+
+                <td>${item.kontak}</td>
+
+                <td>${item.kategori}</td>
+
+                <td>${item.pengaduan}</td>
+
+                <td>
+                    <strong>
+                        ${item.status}
+                    </strong>
+                </td>
+
+                <td>
+                    ${item.tanggapan || "-"}
+                </td>
+
+                <td>
+
+                    <button
+                        onclick="respondComplaint('${item.id}')"
+                    >
+                        Tanggapi
+                    </button>
+
+                    <button
+                        onclick="rejectComplaint('${item.id}')"
+                    >
+                        Tolak
+                    </button>
+
+                </td>
+
+            `;
+
+            table.appendChild(row);
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="9">
+                    Gagal mengambil data.
+                </td>
+            </tr>
+        `;
+
+    }
+
 }
 
-document.getElementById("refresh").addEventListener("click",loadData);
-document.getElementById("logout").addEventListener("click",()=>{sessionStorage.clear();location.href="login-admin.html";});
-loadData();
+
+async function respondComplaint(id) {
+
+    const responseText =
+        prompt("Masukkan tanggapan:");
+
+    if (!responseText) return;
+
+    await updateComplaint(
+        id,
+        "Diproses",
+        responseText
+    );
+
+}
+
+
+async function rejectComplaint(id) {
+
+    const alasan =
+        prompt("Masukkan alasan penolakan:");
+
+    if (!alasan) return;
+
+    await updateComplaint(
+        id,
+        "Ditolak",
+        alasan
+    );
+
+}
+
+
+async function updateComplaint(
+    id,
+    status,
+    tanggapan
+) {
+
+    const token =
+        localStorage.getItem("adminToken");
+
+    try {
+
+        const response = await fetch(API_URL, {
+
+            method: "POST",
+
+            body: new URLSearchParams({
+
+                action: "update",
+
+                token: token,
+
+                id: id,
+
+                status: status,
+
+                tanggapan: tanggapan
+
+            })
+
+        });
+
+        const data = await response.json();
+
+        if (!data.success) {
+
+            alert(
+                data.message ||
+                "Gagal memperbarui pengaduan."
+            );
+
+            return;
+
+        }
+
+        alert("Pengaduan berhasil diperbarui.");
+
+        loadComplaints();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Gagal menghubungi database."
+        );
+
+    }
+
+}
+
+
+function logoutAdmin() {
+
+    localStorage.removeItem(
+        "adminToken"
+    );
+
+    window.location.href =
+        "login-admin.html";
+
+}
